@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jm-select-searchable')
+angular.module('jm-select-searchable', [])
   .directive('jmSelectSearchable', function() {
                return {
                  template:   '<div>\
