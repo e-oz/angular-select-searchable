@@ -11,7 +11,7 @@ angular.module('jm-select-searchable', [])
                      <button type="button" class="pull-right text-center dropup" ng-class="caretButtonClass" ng-show="show_list" tabindex="-1" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
                        <span class="caret"></span>\
                      </button>\
-                     {{ getItemString(ngModel) }}\
+                     {{ getItemString(currentObject) }}\
                    </div>\
                      <div ng-show="show_list" class="dropdown">\
                          <div style="position: absolute; top: 100%; left: 0; z-index: 1000; float: left;">\
@@ -38,7 +38,8 @@ angular.module('jm-select-searchable', [])
         selectInputClass: '@',
         searchInputClass: '@',
         caretButtonClass: '@',
-        listLength: '@'
+        listLength: '@',
+        modelField: '@'
       },
       compile: function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
@@ -48,8 +49,17 @@ angular.module('jm-select-searchable', [])
         }
       },
       controller: function ($scope, $interpolate) {
+        if ($scope.ngModel) {
+          $scope.currentObject = $scope.ngModel;
+        }
         $scope.setObject = function (object) {
-          $scope.ngModel = object;
+          $scope.currentObject = object;
+          if ($scope.modelField) {
+            $scope.ngModel = object[$scope.modelField];
+          }
+          else {
+            $scope.ngModel = object;
+          }
           $scope.show_list = false;
           $scope.search = '';
           if (angular.isFunction($scope.ngChange)) {

@@ -15,6 +15,7 @@ It's not "typeahead", because in typeahead you can input any text in inputbox, a
 * **searchInputClass** - class will be added to search input (second input)
 * **caretButtonClass** - class will be added to caret buttons
 * **listLength** - length of variants list, 10 by default
+* **modelField** - if set, ngModel will recieve value of object[modelField], not object
 
 ###Example
 Included HTML template is an example, currently designed for Twitter Bootstrap 3.2
