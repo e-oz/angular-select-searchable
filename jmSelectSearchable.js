@@ -4,11 +4,11 @@ angular.module('jm-select-searchable', [])
   .directive('jmSelectSearchable', function ($timeout) {
     return {
       template: '<div>\
-                   <div class="form-control" style="overflow: hidden;" ng-click="switchMenu()" ng-disabled="ngDisabled">\
-                     <button type="button" class="pull-right text-center" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
+                   <div class="form-control" ng-class="selectInputClass" style="overflow: hidden;" ng-click="switchMenu()" ng-disabled="ngDisabled">\
+                     <button type="button" class="pull-right text-center" ng-class="caretButtonClass" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
                        <span class="caret"></span>\
                      </button>\
-                     <button type="button" class="pull-right text-center dropup" ng-show="show_list" tabindex="-1" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
+                     <button type="button" class="pull-right text-center dropup" ng-class="caretButtonClass" ng-show="show_list" tabindex="-1" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
                        <span class="caret"></span>\
                      </button>\
                      {{ getItemString(ngModel) }}\
@@ -16,7 +16,7 @@ angular.module('jm-select-searchable', [])
                      <div ng-show="show_list" class="dropdown">\
                          <div style="position: absolute; top: 100%; left: 0; z-index: 1000; float: left;">\
                              <div ng-show="show_list" class="input-group">\
-                                 <input class="form-control jm-select-searchable-input-{{$id}}" ng-model="search" ng-blur="switchMenu(1)" placeholder="Введите данные для поиска"/>\
+                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="switchMenu(1)" placeholder="Введите данные для поиска"/>\
                                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
@@ -34,7 +34,10 @@ angular.module('jm-select-searchable', [])
         ngChange: "&",
         printAttrs: "@",
         variantsOrderBy: '@orderBy',
-        ngDisabled: '='
+        ngDisabled: '=',
+        selectInputClass: '@',
+        searchInputClass: '@',
+        caretButtonClass: '@'
       },
       compile: function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
@@ -66,7 +69,7 @@ angular.module('jm-select-searchable', [])
           $scope.show_list = !$scope.show_list;
           if ($scope.show_list) {
             $timeout(function () {
-              var inputBox = $('#jm-select-searchable-input-' + $scope.id);
+              var inputBox = $('#jmSelectSearchableInput' + $scope.id);
               if (inputBox) {
                 inputBox.focus();
               }
