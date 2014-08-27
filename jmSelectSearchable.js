@@ -19,7 +19,7 @@ angular.module('jm-select-searchable', [])
                                  <input class="form-control" ng-model="search" placeholder="Введите данные для поиска"/>\
                                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
-                             <ul class="dropdown-menu visible-block col-sm-12" ng-show="search">\
+                             <ul class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
                                  <li ng-repeat="object in objects | filter:search | orderBy:variantsOrderBy">\
                                      <a  style="overflow: hidden;" tabindex="-1" href="" ng-click="setObject(object)">{{ getItemString(object) }}</a>\
                                  </li>\
