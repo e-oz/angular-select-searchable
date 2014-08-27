@@ -24,10 +24,10 @@ Usage [example in Plunker](http://plnkr.co/edit/UVzDiNZKbjDE1ZxY9hJD)
 `bower install angular-select-searchable --save`
 
 to index.html add link to js file, something like:
-<script src="bower_components/angular-select-searchable/jmSelectSearchable.js"></script>
+`<script src="bower_components/angular-select-searchable/jmSelectSearchable.js"></script>`
 
 In app.js add dependency:
-'jm-select-searchable'
+`'jm-select-searchable'`
 
 ###Improvements
 Any pull-requests for improvements and optimizations are very welcomed!
