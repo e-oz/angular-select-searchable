@@ -67,14 +67,14 @@ angular.module('jm-select-searchable', [])
             return false;
           }
           $scope.show_list = !$scope.show_list;
-          if ($scope.show_list) {
-            $timeout(function () {
+          $timeout(function () {
+            if ($scope.show_list) {
               var inputBox = $('#jmSelectSearchableInput' + $scope.$id);
               if (inputBox) {
                 inputBox.focus();
               }
-            }, 50);
-          }
+            }
+          }, 50);
         };
 
         $scope.getItemString = function (item) {
