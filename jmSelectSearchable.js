@@ -16,7 +16,7 @@ angular.module('jm-select-searchable', [])
                      <div ng-show="show_list" class="dropdown">\
                          <div style="position: absolute; top: 100%; left: 0; z-index: 1000; float: left;">\
                              <div ng-show="show_list" class="input-group">\
-                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="switchMenu(1)" placeholder="Введите данные для поиска"/>\
+                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="Введите данные для поиска"/>\
                                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
@@ -59,10 +59,7 @@ angular.module('jm-select-searchable', [])
           }
         });
 
-        $scope.switchMenu = function (hide) {
-          if (hide) {
-            $scope.show_list = false;
-          }
+        $scope.switchMenu = function () {
           if ($scope.ngDisabled) {
             return false;
           }
@@ -74,6 +71,12 @@ angular.module('jm-select-searchable', [])
                 inputBox.focus();
               }
             }
+          }, 50);
+        };
+
+        $scope.blurHide = function () {
+          $timeout(function () {
+            $scope.show_list = false;
           }, 50);
         };
 
