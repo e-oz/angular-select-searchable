@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('jm-select-searchable', [])
-  .directive('jmSelectSearchable', function() {
-               return {
-                 template:   '<div>\
+  .directive('jmSelectSearchable', function ($timeout) {
+    return {
+      template: '<div>\
                    <div class="form-control" style="overflow: hidden;" ng-click="switchMenu()" ng-disabled="ngDisabled">\
                      <button type="button" class="pull-right text-center" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
                        <span class="caret"></span>\
@@ -16,7 +16,7 @@ angular.module('jm-select-searchable', [])
                      <div ng-show="show_list" class="dropdown">\
                          <div style="position: absolute; top: 100%; left: 0; z-index: 1000; float: left;">\
                              <div ng-show="show_list" class="input-group">\
-                                 <input class="form-control" ng-model="search" placeholder="Введите данные для поиска"/>\
+                                 <input class="form-control jm-select-searchable-input-{{$id}}" ng-model="search" ng-blur="switchMenu(1)" placeholder="Введите данные для поиска"/>\
                                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
@@ -27,55 +27,66 @@ angular.module('jm-select-searchable', [])
                          </div>\
                      </div>\
                  </div>',
-                 restrict:   'AE',
-                 scope:      {
-                   objects:         "=",
-                   ngModel:         "=",
-                   ngChange:        "&",
-                   printAttrs:      "@",
-                   variantsOrderBy: '@orderBy',
-                   ngDisabled:      '='
-                 },
-                 compile:    function(element, tAttrs) {
-                   tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
-                   tAttrs.printAttrs = tAttrs.printAttrs.replace(/}}/g, ']]');
-                 },
-                 controller: function($scope, $interpolate) {
-                   $scope.setObject = function(object) {
-                     $scope.ngModel = object;
-                     $scope.show_list = false;
-                     $scope.search = '';
-                     if (angular.isFunction($scope.ngChange)) {
-                       $scope.ngChange();
-                     }
-                   };
+      restrict: 'AE',
+      scope: {
+        objects: "=",
+        ngModel: "=",
+        ngChange: "&",
+        printAttrs: "@",
+        variantsOrderBy: '@orderBy',
+        ngDisabled: '='
+      },
+      compile: function (element, tAttrs) {
+        tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
+        tAttrs.printAttrs = tAttrs.printAttrs.replace(/}}/g, ']]');
+      },
+      controller: function ($scope, $interpolate) {
+        $scope.setObject = function (object) {
+          $scope.ngModel = object;
+          $scope.show_list = false;
+          $scope.search = '';
+          if (angular.isFunction($scope.ngChange)) {
+            $scope.ngChange();
+          }
+        };
 
-                   $scope.$watch('ngDisabled', function(newValue) {
-                     if (newValue) {
-                       $scope.show_list = false;
-                     }
-                   });
+        $scope.$watch('ngDisabled', function (newValue) {
+          if (newValue) {
+            $scope.show_list = false;
+          }
+        });
 
-                   $scope.switchMenu = function() {
-                     if ($scope.ngDisabled) {
-                       return false;
-                     }
-                     $scope.show_list = !$scope.show_list;
-                   };
+        $scope.switchMenu = function (hide) {
+          if (hide) {
+            $scope.show_list = false;
+          }
+          if ($scope.ngDisabled) {
+            return false;
+          }
+          $scope.show_list = !$scope.show_list;
+          if ($scope.show_list) {
+            $timeout(function () {
+              var inputBox = $('#jm-select-searchable-input-' + $scope.id);
+              if (inputBox) {
+                inputBox.focus();
+              }
+            }, 50);
+          }
+        };
 
-                   $scope.getItemString = function(item) {
-                     if (angular.isUndefined(item)) {
-                       return '';
-                     }
-                     if (!$scope.printAttrs || !angular.isString($scope.printAttrs)) {
-                       $scope.printAttrs = '{{ first_name }} {{ last_name }}';
-                     }
-                     else {
-                       $scope.printAttrs = $scope.printAttrs.replace(/\[\[/g, '{{');
-                       $scope.printAttrs = $scope.printAttrs.replace(/\]\]/g, '}}');
-                     }
-                     return $interpolate($scope.printAttrs)(item);
-                   };
-                 }
-               };
-             });
+        $scope.getItemString = function (item) {
+          if (angular.isUndefined(item)) {
+            return '';
+          }
+          if (!$scope.printAttrs || !angular.isString($scope.printAttrs)) {
+            $scope.printAttrs = '{{ first_name }} {{ last_name }}';
+          }
+          else {
+            $scope.printAttrs = $scope.printAttrs.replace(/\[\[/g, '{{');
+            $scope.printAttrs = $scope.printAttrs.replace(/\]\]/g, '}}');
+          }
+          return $interpolate($scope.printAttrs)(item);
+        };
+      }
+    };
+  });
