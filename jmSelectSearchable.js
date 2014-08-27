@@ -77,7 +77,7 @@ angular.module('jm-select-searchable', [])
         $scope.blurHide = function () {
           $timeout(function () {
             $scope.show_list = false;
-          }, 50);
+          }, 500);
         };
 
         $scope.getItemString = function (item) {
