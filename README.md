@@ -14,10 +14,20 @@ It's not "typeahead", because in typeahead you can input any text in inputbox, a
 * **selectInputClass** - class will be added to select input (first input in form)
 * **searchInputClass** - class will be added to search input (second input)
 * **caretButtonClass** - class will be added to caret buttons
+* **listLength** - length of variants list, 10 by default
 
 ###Example
 Included HTML template is an example, currently designed for Twitter Bootstrap 3.2
-Usage [example in Plunker](http://plnkr.co/edit/UVzDiNZKbjDE1ZxY9hJD)  
+Usage [example in Plunker](http://plnkr.co/edit/UVzDiNZKbjDE1ZxY9hJD)
+
+###Install
+`bower install angular-select-searchable --save`
+
+to index.html add link to js file, something like:
+<script src="bower_components/angular-select-searchable/jmSelectSearchable.js"></script>
+
+In app.js add dependency:
+'jm-select-searchable'
 
 ###Improvements
 Any pull-requests for improvements and optimizations are very welcomed!

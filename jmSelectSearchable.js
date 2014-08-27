@@ -20,7 +20,7 @@ angular.module('jm-select-searchable', [])
                                  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
-                                 <li ng-repeat="object in objects | filter:search | orderBy:variantsOrderBy">\
+                                 <li ng-repeat="object in objects | filter:search | orderBy:variantsOrderBy | limitTo:listLength">\
                                      <a  style="overflow: hidden;" tabindex="-1" href="" ng-click="setObject(object)">{{ getItemString(object) }}</a>\
                                  </li>\
                              </ul>\
@@ -37,11 +37,15 @@ angular.module('jm-select-searchable', [])
         ngDisabled: '=',
         selectInputClass: '@',
         searchInputClass: '@',
-        caretButtonClass: '@'
+        caretButtonClass: '@',
+        listLength: '@'
       },
       compile: function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/}}/g, ']]');
+        if (!tAttrs.listLength) {
+          tAttrs.listLength = 10;
+        }
       },
       controller: function ($scope, $interpolate) {
         $scope.setObject = function (object) {
