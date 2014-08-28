@@ -40,7 +40,7 @@ angular.module('jm-select-searchable', [])
         caretButtonClass: '@',
         listLength: '@',
         modelField: '@',
-        showSearchIcon: '=?'
+        showSearchIcon: '@'
       },
       compile: function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
