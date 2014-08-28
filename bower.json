@@ -1,11 +1,16 @@
 {
   "name": "angular-select-searchable",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "authors": [
     "Eugene OZ <normandiggs@gmail.com>"
   ],
   "description": "Directive to select from list of objects with search input box",
   "main": "jmSelectSearchable.js",
   "license": "MIT",
+  "dependencies": {
+    "lodash": "~2.4",
+    "angular": "latest",
+    "jquery": "~2.1"
+  },
   "homepage": "https://github.com/jamm/angular-select-searchable"
 }
