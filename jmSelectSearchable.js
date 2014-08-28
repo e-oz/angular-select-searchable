@@ -50,10 +50,18 @@ angular.module('jm-select-searchable', [])
       },
       controller: function ($scope, $interpolate) {
         if ($scope.ngModel) {
-          if ($scope.modelField && $scope.objects) {
-            var s = {};
-            s[$scope.modelField] = $scope.ngModel;
-            $scope.currentObject = _.find($scope.objects, s);
+          if ($scope.modelField) {
+            var waitForObjects = $scope.$watch('objects.length', function (nv) {
+              if (!nv) {
+                return false;
+              }
+              angular.forEach($scope.objects, function (item) {
+                if (item[$scope.modelField] == $scope.ngModel) {
+                  $scope.currentObject = item;
+                }
+              });
+              waitForObjects();
+            });
           }
           else {
             $scope.currentObject = $scope.ngModel;
