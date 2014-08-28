@@ -48,6 +48,9 @@ angular.module('jm-select-searchable', [])
         if (!tAttrs.listLength) {
           tAttrs.listLength = 10;
         }
+        if (tAttrs.showSearchIcon === undefined) {
+          tAttrs.showSearchIcon = "true";
+        }
       },
       controller: function ($scope, $interpolate) {
         if ($scope.ngModel) {
