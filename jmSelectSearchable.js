@@ -17,7 +17,7 @@ angular.module('jm-select-searchable', [])
                          <div style="position: absolute; top: 100%; left: 0; z-index: 1000; float: left;">\
                              <div ng-show="show_list" class="input-group">\
                                  <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="Введите данные для поиска"/>\
-                                 <span ng-show="showSearchIcon" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
+                                 <span ng-hide="hideSearchIcon" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul ng-if="objects.length" class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
                                  <li ng-repeat="object in objects | filter:search | orderBy:variantsOrderBy | limitTo:listLength track by $index">\
@@ -40,16 +40,13 @@ angular.module('jm-select-searchable', [])
         caretButtonClass: '@',
         listLength: '@',
         modelField: '@',
-        showSearchIcon: '@'
+        hideSearchIcon: '@'
       },
       compile: function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/}}/g, ']]');
         if (!tAttrs.listLength) {
           tAttrs.listLength = 10;
-        }
-        if (tAttrs.showSearchIcon === undefined) {
-          tAttrs.showSearchIcon = "true";
         }
       },
       controller: function ($scope, $interpolate) {
