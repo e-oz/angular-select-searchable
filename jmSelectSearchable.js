@@ -5,7 +5,7 @@ angular.module('jm-select-searchable', [])
     return {
       template:   '<div>\
       <style>.jm-select-searchable-caret-btn{margin: 0 -5px; padding: 0; border: none; background-color: #fff;}\
-       .jm-select-searchable-items-list{position: absolute; top: 100%; left: 0; z-index: 1000; float: left;}\
+       .jm-select-searchable-items-list{position: absolute; top: 100%; left: 0; z-index: 1000; float: left; min-width: 230px;}\
        .jm-select-searchable-list-item{overflow: hidden;}\
        .jm-select-searchable-select-input{overflow: hidden;}\
       </style>\
@@ -21,7 +21,7 @@ angular.module('jm-select-searchable', [])
                      <div ng-show="show_list" class="dropdown">\
                          <div class="jm-select-searchable-items-list">\
                              <div ng-show="show_list" class="input-group">\
-                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="Введите данные для поиска"/>\
+                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="searchPlaceholder"/>\
                                  <span ng-hide="hideSearchIcon" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul ng-if="objects.length" class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
@@ -34,18 +34,19 @@ angular.module('jm-select-searchable', [])
                  </div>',
       restrict:   'AE',
       scope:      {
-        objects:          "=",
-        ngModel:          "=",
-        ngChange:         "&",
-        printAttrs:       "@",
-        variantsOrderBy:  '@orderBy',
-        ngDisabled:       '=',
-        selectInputClass: '@',
-        searchInputClass: '@',
-        caretButtonClass: '@',
-        listLength:       '@',
-        modelField:       '@',
-        hideSearchIcon:   '@'
+        objects:           "=",
+        ngModel:           "=",
+        ngChange:          "&",
+        printAttrs:        "@",
+        variantsOrderBy:   '@orderBy',
+        ngDisabled:        '=',
+        selectInputClass:  '@',
+        searchInputClass:  '@',
+        caretButtonClass:  '@',
+        listLength:        '@',
+        modelField:        '@',
+        hideSearchIcon:    '@',
+        searchPlaceholder: '@'
       },
       compile:    function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
