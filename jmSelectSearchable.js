@@ -21,7 +21,7 @@ angular.module('jm-select-searchable', [])
                      <div ng-show="show_list" class="dropdown">\
                          <div class="jm-select-searchable-items-list">\
                              <div ng-show="show_list" class="input-group">\
-                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="searchPlaceholder"/>\
+                                 <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="{{searchPlaceholder}}"/>\
                                  <span ng-hide="hideSearchIcon" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul ng-if="objects.length" class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
@@ -113,7 +113,7 @@ angular.module('jm-select-searchable', [])
         $scope.blurHide = function () {
           $timeout(function () {
             $scope.show_list = false;
-          }, 500);
+          }, 200);
         };
 
         $scope.getItemString = function (item) {
