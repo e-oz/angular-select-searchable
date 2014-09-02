@@ -9,7 +9,7 @@ angular.module('jm-select-searchable', [])
        .jm-select-searchable-list-item{overflow: hidden;}\
        .jm-select-searchable-select-input{overflow: hidden;}\
       </style>\
-                   <div class="form-control" class="jm-select-searchable-select-input" ng-class="selectInputClass" ng-click="switchMenu()" ng-disabled="ngDisabled">\
+                   <div class="form-control jm-select-searchable-select-input" ng-class="selectInputClass" ng-click="switchMenu()" ng-disabled="ngDisabled">\
                      <button type="button" class="pull-right text-center jm-select-searchable-caret-btn" ng-class="caretButtonClass" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled">\
                        <span class="caret"></span>\
                      </button>\
