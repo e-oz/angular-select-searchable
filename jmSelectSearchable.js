@@ -7,8 +7,9 @@ angular.module('jm-select-searchable', [])
       <style>.jm-select-searchable-caret-btn{margin: 0 -5px; padding: 0; border: none; background-color: #fff;}\
        .jm-select-searchable-items-list{position: absolute; top: 100%; left: 0; z-index: 1000; float: left;}\
        .jm-select-searchable-list-item{overflow: hidden;}\
+       .jm-select-searchable-select-input{overflow: hidden;}\
       </style>\
-                   <div class="form-control" ng-class="selectInputClass" ng-click="switchMenu()" ng-disabled="ngDisabled">\
+                   <div class="form-control" class="jm-select-searchable-select-input" ng-class="selectInputClass" ng-click="switchMenu()" ng-disabled="ngDisabled">\
                      <button type="button" class="pull-right text-center jm-select-searchable-caret-btn" ng-class="caretButtonClass" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled">\
                        <span class="caret"></span>\
                      </button>\
