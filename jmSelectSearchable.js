@@ -3,46 +3,50 @@
 angular.module('jm-select-searchable', [])
   .directive('jmSelectSearchable', function ($timeout) {
     return {
-      template: '<div>\
-                   <div class="form-control" ng-class="selectInputClass" style="overflow: hidden;" ng-click="switchMenu()" ng-disabled="ngDisabled">\
-                     <button type="button" class="pull-right text-center" ng-class="caretButtonClass" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
+      template:   '<div>\
+      <style>.jm-select-searchable-caret-btn{margin: 0 -5px; padding: 0; border: none; background-color: #fff;}\
+       .jm-select-searchable-items-list{position: absolute; top: 100%; left: 0; z-index: 1000; float: left;}\
+       .jm-select-searchable-list-item{overflow: hidden;}\
+      </style>\
+                   <div class="form-control" ng-class="selectInputClass" ng-click="switchMenu()" ng-disabled="ngDisabled">\
+                     <button type="button" class="pull-right text-center jm-select-searchable-caret-btn" ng-class="caretButtonClass" ng-hide="show_list" tabindex="-1" ng-disabled="ngDisabled">\
                        <span class="caret"></span>\
                      </button>\
-                     <button type="button" class="pull-right text-center dropup" ng-class="caretButtonClass" ng-show="show_list" tabindex="-1" style="margin: 0 -5px; padding: 0; border: none; background-color: #fff;">\
+                     <button type="button" class="pull-right text-center dropup jm-select-searchable-caret-btn" ng-class="caretButtonClass" ng-show="show_list" tabindex="-1">\
                        <span class="caret"></span>\
                      </button>\
                      {{ getItemString(currentObject) }}\
                    </div>\
                      <div ng-show="show_list" class="dropdown">\
-                         <div style="position: absolute; top: 100%; left: 0; z-index: 1000; float: left;">\
+                         <div class="jm-select-searchable-items-list">\
                              <div ng-show="show_list" class="input-group">\
                                  <input class="form-control" id="jmSelectSearchableInput{{$id}}" ng-class="searchInputClass" ng-model="search" ng-blur="blurHide()" placeholder="Введите данные для поиска"/>\
                                  <span ng-hide="hideSearchIcon" class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>\
                              </div>\
                              <ul ng-if="objects.length" class="dropdown-menu col-sm-12" ng-show="search" style="display: block;">\
                                  <li ng-repeat="object in objects | filter:search | orderBy:variantsOrderBy | limitTo:listLength track by $index">\
-                                     <a  style="overflow: hidden;" tabindex="-1" href="" ng-click="setObject(object)">{{ getItemString(object) }}</a>\
+                                     <a  class="jm-select-searchable-list-item" tabindex="-1" href="" ng-click="setObject(object)">{{ getItemString(object) }}</a>\
                                  </li>\
                              </ul>\
                          </div>\
                      </div>\
                  </div>',
-      restrict: 'AE',
-      scope: {
-        objects: "=",
-        ngModel: "=",
-        ngChange: "&",
-        printAttrs: "@",
-        variantsOrderBy: '@orderBy',
-        ngDisabled: '=',
+      restrict:   'AE',
+      scope:      {
+        objects:          "=",
+        ngModel:          "=",
+        ngChange:         "&",
+        printAttrs:       "@",
+        variantsOrderBy:  '@orderBy',
+        ngDisabled:       '=',
         selectInputClass: '@',
         searchInputClass: '@',
         caretButtonClass: '@',
-        listLength: '@',
-        modelField: '@',
-        hideSearchIcon: '@'
+        listLength:       '@',
+        modelField:       '@',
+        hideSearchIcon:   '@'
       },
-      compile: function (element, tAttrs) {
+      compile:    function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/}}/g, ']]');
         if (!tAttrs.listLength) {
