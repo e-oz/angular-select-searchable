@@ -66,6 +66,10 @@ angular.module('jm-select-searchable', [])
         }
 
         function setValueFromModel() {
+          if (!$scope.ngModel) {
+            $scope.currentObject = undefined;
+            return false;
+          }
           if ($scope.modelField) {
             if ($scope.objects && $scope.objects.length) {
               setCurrentObj();
@@ -109,11 +113,7 @@ angular.module('jm-select-searchable', [])
           }
         });
 
-        $scope.$watch('ngModel', function (nv) {
-          if (nv !== undefined) {
-            setValueFromModel();
-          }
-        });
+        $scope.$watch('ngModel', setValueFromModel, true);
 
         $scope.switchMenu = function () {
           if ($scope.ngDisabled) {
