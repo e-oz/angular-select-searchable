@@ -56,24 +56,38 @@ angular.module('jm-select-searchable', [])
         }
       },
       controller: function ($scope, $interpolate) {
-        if ($scope.ngModel) {
+
+        function setCurrentObj() {
+          angular.forEach($scope.objects, function (item) {
+            if (item[$scope.modelField] == $scope.ngModel) {
+              $scope.currentObject = item;
+            }
+          });
+        }
+
+        function setValueFromModel() {
           if ($scope.modelField) {
-            var waitForObjects = $scope.$watch('objects.length', function (nv) {
-              if (!nv) {
-                return false;
-              }
-              angular.forEach($scope.objects, function (item) {
-                if (item[$scope.modelField] == $scope.ngModel) {
-                  $scope.currentObject = item;
+            if ($scope.objects && $scope.objects.length) {
+              setCurrentObj();
+            }
+            else {
+              $scope.$watch('objects.length', function (nv) {
+                if (!nv) {
+                  return false;
                 }
-              });
-              waitForObjects();
-            });
+                setCurrentObj();
+              }, true);
+            }
           }
           else {
             $scope.currentObject = $scope.ngModel;
           }
         }
+
+        if ($scope.ngModel) {
+          setValueFromModel();
+        }
+
         $scope.setObject = function (object) {
           $scope.currentObject = object;
           if ($scope.modelField) {
@@ -92,6 +106,12 @@ angular.module('jm-select-searchable', [])
         $scope.$watch('ngDisabled', function (newValue) {
           if (newValue) {
             $scope.show_list = false;
+          }
+        });
+
+        $scope.$watch('ngModel', function (nv) {
+          if (nv !== undefined) {
+            setValueFromModel();
           }
         });
 
