@@ -103,7 +103,7 @@ angular.module('jm-select-searchable', [])
           $scope.show_list = false;
           $scope.search = '';
           if (angular.isFunction($scope.ngChange)) {
-            $scope.ngChange();
+            $timeout($scope.ngChange);
           }
         };
 
