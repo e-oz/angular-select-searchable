@@ -3,7 +3,7 @@
 angular.module('jm-select-searchable', [])
   .directive('jmSelectSearchable', function ($timeout) {
     return {
-      template:   '<div>\
+      template: '<div>\
       <style>.jm-select-searchable-caret-btn{margin: 0 -5px; padding: 0; border: none; background-color: #fff;}\
        .jm-select-searchable-items-list{position: absolute; top: 100%; left: 0; z-index: 1000; float: left; min-width: 230px;}\
        .jm-select-searchable-list-item{overflow: hidden;}\
@@ -32,23 +32,23 @@ angular.module('jm-select-searchable', [])
                          </div>\
                      </div>\
                  </div>',
-      restrict:   'AE',
-      scope:      {
-        objects:           "=",
-        ngModel:           "=",
-        ngChange:          "&",
-        printAttrs:        "@",
-        variantsOrderBy:   '@orderBy',
-        ngDisabled:        '=',
-        selectInputClass:  '@',
-        searchInputClass:  '@',
-        caretButtonClass:  '@',
-        listLength:        '@',
-        modelField:        '@',
-        hideSearchIcon:    '@',
+      restrict: 'AE',
+      scope: {
+        objects: "=",
+        ngModel: "=",
+        ngChange: "&",
+        printAttrs: "@",
+        variantsOrderBy: '@orderBy',
+        ngDisabled: '=',
+        selectInputClass: '@',
+        searchInputClass: '@',
+        caretButtonClass: '@',
+        listLength: '@',
+        modelField: '@',
+        hideSearchIcon: '@',
         searchPlaceholder: '@'
       },
-      compile:    function (element, tAttrs) {
+      compile: function (element, tAttrs) {
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/{{/g, '[[');
         tAttrs.printAttrs = tAttrs.printAttrs.replace(/}}/g, ']]');
         if (!tAttrs.listLength) {
@@ -56,6 +56,7 @@ angular.module('jm-select-searchable', [])
         }
       },
       controller: function ($scope, $interpolate) {
+        var objectsLengthWatcher = false;
 
         function setCurrentObj() {
           angular.forEach($scope.objects, function (item) {
@@ -74,8 +75,8 @@ angular.module('jm-select-searchable', [])
             if ($scope.objects && $scope.objects.length) {
               setCurrentObj();
             }
-            else {
-              $scope.$watch('objects.length', function (nv) {
+            if (!objectsLengthWatcher) {
+              objectsLengthWatcher = $scope.$watch('objects.length', function (nv) {
                 if (!nv) {
                   return false;
                 }
